@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database.config')
+const nodemailer = require('nodemailer')
 
 
 const registerSchema = mongoose.Schema({
@@ -34,18 +35,18 @@ let User = mongoose.model('Registration', registerSchema);
 
 
 class Input {
-    hash(password) {
+    encrypt(password) {
         const saltRounds = 10;
         var salt = bcrypt.genSaltSync(saltRounds);
-        var hash = bcrypt.hashSync(password, salt);
-        return hash;
+        var encrypt = bcrypt.hashSync(password, salt);
+        return encrypt;
     }
     register(data, callback) {
         let users = new User({
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,
-            password: this.hash(data.password)
+            password: this.encrypt(data.password)
         });
         users.save((error, result) => {
             console.log("Success");
@@ -60,6 +61,7 @@ class Input {
         });
     }
     login(data, callback) {
+        console.log(".................")
         User.findOne({ email: data.email }, (err, res) => {
             if (err) {
                 callback(err)
@@ -84,5 +86,72 @@ class Input {
             })
         });
     }
+    forgot(data, callback) {
+        User.findOne({ email: data.email }, (err, result) => {
+            if (err) {
+                return callback(err)
+            } else if (!result) {
+                return callback({ message: "user not found" });
+            }
+
+            var resetToken = jwt.sign({ email: result.email }, config.secret, { expiresIn: "7d" });
+
+            User.updateOne({ email: result.email }, { token: resetToken }, (err, info) => {
+                if (err)
+                    callback(err)
+                else {  
+
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'tommoody1107@gmail.com',
+                    pass: 'bridgelabs'
+                }
+            });
+
+            var mailOptions = {
+                from: 'tommoody1107@gmail.com',
+                to: data.email,
+                subject: 'Forget Password',
+                text: 'reset password link!' + '  ' + 'http://localhost:3000/resetPassword' + resetToken + '----'
+            };
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        }
+    })
+});
+}
+
+    reset(data, callback) {
+        
+        var decoded = jwt.verify(data.token, config.secret);
+        User.findOne({ email: decoded.email }, (err, res) => {
+            if (err) {
+
+                callback(err)
+            }
+            else {
+                if (res.token == data.token) {
+                    console.log(data.password);
+                    
+                    User.updateOne({ email: res.email }, { password: this.encrypt(data.password) }, (err, info) => {
+                        if (err)
+                            callback(err)
+                        else
+                            callback(info);
+                    })
+                }
+                else {
+                    console.log('password not set');
+                }
+            }
+        })
+    }
+
 }
 module.exports = new Input;

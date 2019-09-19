@@ -20,3 +20,21 @@ exports.loginService = (data, callback) => {
         }
     })
 }
+exports.forgotService = (data, callback) => {
+    model.forgot(data, (err, result) => {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, result);
+        }
+    })
+}
+exports.resetService = (data, callback) => {
+    model.reset(data, (err, result) => {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, result);
+        }
+    })
+}

@@ -15,7 +15,7 @@ exports.create = (req, res) => {
         response.success = false;
         response.message = "validation error";
         response.errors = errors;
-        return res.status(422).send(response);
+        return res.status(400).send(response);
     }
     else {
         var registerObj = {
@@ -58,5 +58,41 @@ exports.loginController = (req, res) => {
     })
 
 }
+exports.forgotcontroller = (req, res) => {
+    let response = {};
+    service.forgotService(req.body, (err, result) => {
+        if (err) {
 
+            response.success = false;
+            response.errors = err;
+            return res.status(400).send(response);
+        }
+        else {
+            response.success = true;
+            response.result = result;
+            response.message = " successful";
+            return res.status(200).send(response);
+        }
 
+    })
+
+}
+
+exports.resetcontroller = (req, res) => {
+    let response = {};
+    service.resetService(req.body, (err, result) => {
+        if (err) {
+            response.success = false;
+            response.errors = err;
+            return res.status(400).send(response);
+        }
+        else {
+            response.success = true;
+            response.result = result;
+            response.message = " successful";
+            return res.status(200).send(response);
+        }
+
+    })
+
+}
