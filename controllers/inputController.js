@@ -79,8 +79,15 @@ exports.forgotcontroller = (req, res) => {
 }
 
 exports.resetcontroller = (req, res) => {
+    //console.log(req);
+    var resetObj = {
+        token: req.headers.token,
+        email: req.user.email,
+        password: req.body.password
+    }
+    
     let response = {};
-    service.resetService(req.body, (err, result) => {
+    service.resetService(resetObj, (err, result) => {
         if (err) {
             response.success = false;
             response.errors = err;

@@ -1,0 +1,17 @@
+<form novalidate name="resetForm">
+        <h1>Reset password</h1>
+        <p>Enter New Password: <input type="text" ng-model="password" name="password" required ng-minlength="6"></p>
+        <span style="color:red" ng-show="resetForm.password.$dirty && resetForm.password.$invalid" >
+                <span ng-show="resetForm.password.$error.required">Password is required</span>
+                <span ng-show="resetForm.password.$error.minlength">Password is short, min length is 6
+                        characters.</span>
+        </span> 
+
+        <p>Retype-Password: <input type="text" ng-model="confirm" name="confirm" ng-pattern="password" required></p>
+        <span style="color:red" ng-show="resetForm.confirm.$dirty && resetForm.confirm.$invalid">
+                <span ng-show="resetForm.confirm.$error.required">Confirm Password is required</span>
+                <span ng-show="resetForm.confirm.$error.pattern">Password mismatch</span>
+        </span> 
+        <button type="button" ng-click="reset()" ng-disabled="(resetForm.password.$invalid)||( resetForm.confirm.$invalid)">Reset</button>
+
+</form>

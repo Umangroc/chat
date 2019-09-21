@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const router = require('../umang/app/routes/chatRoutes')
+const router = require('../app/routes/chatRoutes')
 const valid = require('express-validator')
 
 // create express app
@@ -14,9 +14,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
 app.use(valid());
-app.use(express.static('../FrontEnd'));
+app.use(express.static('../app/FrontEnd'));
 // Configuring the database
-const dbConfig = require('../umang/app/config/database.config');
+const dbConfig = require('../app/config/database.config');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;

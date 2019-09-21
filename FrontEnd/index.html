@@ -3,16 +3,27 @@
 
 <head>
     <title></title>
-    <script src ="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.22/angular-ui-router.js'></script>
-    <script src="app.js"></script>
-    <script src="Controller/registerController.js"></script>
 
-    <body>
-            <h1>ChatApp</h1>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.22/angular-ui-router.js'></script>
+
+    <script src="app.js"></script>
     
-        <ui-view></ui-view>
-    
+    <script src="Controller/registerController.js"></script>
+    <script src="Controller/loginController.js"></script>
+    <script src="Controller/forgotController.js"></script>
+    <script src="Controller/resetController.js"></script>
+   
+    <script src="Services/registerservices.js"></script>
+    <script src="Services/loginservices.js"></script>
+    <script src="Services/forgotservices.js"></script>
+    <script src="Services/resetservices.js"></script>
+
+<body>
+    <h1>ChatApp</h1>
+
+    <ui-view></ui-view>
+
 </body>
 </head>
 

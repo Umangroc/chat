@@ -69,8 +69,8 @@ class Input {
 
                 callback({ message: "User not found." });
             }
-            // console.log(data.password);
-            // console.log(res.password);
+            console.log(data.password);
+            console.log(res.password);
             bcrypt.compare(data.password, res.password, (err, result) => {
                 //console.log(result);
 
@@ -94,7 +94,7 @@ class Input {
                 return callback({ message: "user not found" });
             }
 
-            var resetToken = jwt.sign({ email: result.email }, config.secret, { expiresIn: "7d" });
+            var resetToken = jwt.sign({ email: result.email }, "abc", { expiresIn: "7d" });
 
             User.updateOne({ email: result.email }, { token: resetToken }, (err, info) => {
                 if (err)
@@ -113,12 +113,13 @@ class Input {
                 from: 'tommoody1107@gmail.com',
                 to: data.email,
                 subject: 'Forget Password',
-                text: 'reset password link!' + '  ' + 'http://localhost:3000/resetPassword' + resetToken + '----'
+                text: 'Click the given link to reset password!' + '  ' + 'http://localhost:3000/#!/reset/' + resetToken
             };
             transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
                     console.log(error);
                 } else {
+                    callback(null,info);
                     console.log('Email sent: ' + info.response);
                 }
             });
@@ -128,9 +129,7 @@ class Input {
 }
 
     reset(data, callback) {
-        
-        var decoded = jwt.verify(data.token, config.secret);
-        User.findOne({ email: decoded.email }, (err, res) => {
+        User.findOne({ email: data.email }, (err, res) => {
             if (err) {
 
                 callback(err)
@@ -143,7 +142,7 @@ class Input {
                         if (err)
                             callback(err)
                         else
-                            callback(info);
+                            callback(null,info);
                     })
                 }
                 else {
