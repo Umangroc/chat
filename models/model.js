@@ -152,5 +152,14 @@ class Input {
         })
     }
 
+    getUsers(data, callback){
+        User.find({},{firstName:1, _id:0},(error,result)=>{
+            if(error){callback(error)}
+            else{
+                callback(null,result)
+            }
+        })
+    }
+
 }
 module.exports = new Input;

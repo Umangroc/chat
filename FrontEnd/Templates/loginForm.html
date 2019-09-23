@@ -1,9 +1,11 @@
-<form>
 
-Email: <input type = "email" ng-model = "email">
-Password: <input type = "Password" ng-model = "password">
-
-<button type = "button" ng-click="login()">Log In </button>
-<a ui-sref="forgot">Forgot Password??</a>
-<a ui-sref="register">Sign Up?</a>
+<div class="login">
+<form>  
+    Email: <br><input type="email" ng-model="email">
+    <br><br>Password: <br><input type="Password" ng-model="password">
+    <br><br><button type="button" ng-click="login()">Log In </button>
+    <br><br><a ui-sref="forgot">Forgot Password??</a>
+    <br><a ui-sref="register">Sign Up?</a>
+   
 </form>
+</div>

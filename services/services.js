@@ -38,3 +38,12 @@ exports.resetService = (data, callback) => {
         }
     })
 }
+exports.getService = (data,callback) => {
+    model.getUsers(data,(err, result) => {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, result);
+        }
+    })
+}

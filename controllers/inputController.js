@@ -103,3 +103,23 @@ exports.resetcontroller = (req, res) => {
     })
 
 }
+
+exports.getcontroller = (req, res) => {
+    
+    let response = {};
+    service.getService(req.body, (err, result) => {
+        if (err) {
+            response.success = false;
+            response.errors = err;
+            return res.status(400).send(response);
+        }
+        else {
+            response.success = true;
+            response.result = result;
+            response.message = " successful";
+            return res.status(200).send(response);
+        }
+
+    })
+
+}

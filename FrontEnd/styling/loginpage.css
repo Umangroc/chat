@@ -1,0 +1,21 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
+    background: url(../styling/assets/2639410-mr-robot-4k-ultra-high-definition-wallpaper.jpg);
+    background-size: cover;
+}
+
+.login{
+    background: rgba(44,62,80,0.7);
+    padding: 40px;
+    width: 250px;
+    margin: auto;
+    margin-top: 80px;
+    height: 400px;
+    margin-left: 180px;
+}
+
+form{
+    width: 240px;
+    text-align: center;
+}

@@ -1,0 +1,19 @@
+ul {
+  list-style-type: none;
+  margin: 2;
+  padding: 10;
+  overflow: hidden;
+  background-color: #436333;
+  border: 1px solid red;
+  
+}
+
+body {
+    background-color: powderblue;
+  }
+  h2 {
+    color: blue;
+  }
+  p {
+    color: red;
+  }
